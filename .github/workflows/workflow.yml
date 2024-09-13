@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-on-macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        ocaml-compiler:
+          - ocaml.5.2.0
+
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+
+      - name: Set up OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+
+      - name: Install dependencies
+        run: opam install . --deps-only --with-test
+
+      - name: Build
+        run: opam exec -- dune build
+
+      - name: Test
+        run: |
+          opam exec -- dune exec -- bin/server/server.exe &
+          sleep 1;
+          for (( i=0; i<1024; ++i )) ; do curl -s http://localhost:8080/ ; done

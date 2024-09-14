@@ -15,4 +15,4 @@
  (synopsis "Dream leaks sockets")
  (depends
   (dream
-   (>= 1.0.0~alpha6))))
+   (>= 1.0.0~alpha7))))

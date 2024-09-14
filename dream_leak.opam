@@ -6,7 +6,7 @@ homepage: "https://github.com/polytypic/dream-leak"
 bug-reports: "https://github.com/polytypic/dream-leak/issues"
 depends: [
   "dune" {>= "3.15"}
-  "dream" {>= "1.0.0~alpha6"}
+  "dream" {>= "1.0.0~alpha7"}
   "odoc" {with-doc}
 ]
 build: [
